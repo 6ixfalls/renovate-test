@@ -1,0 +1,2 @@
+# renovate: depName=ghcr.io/6ixfalls/kairos-debian datasource=docker
+container_image: "bookworm-standard-amd64-generic-v3.2.1-k3sv1.29.9-k3s1-13"
