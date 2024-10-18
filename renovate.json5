@@ -1,26 +1,14 @@
 {
     $schema: "https://docs.renovatebot.com/renovate-schema.json",
     extends: ["config:recommended"],
-    packageRules: [
-        {
-            matchDatasources: ["docker", "regex"],
-            versioning: "regex:^bookworm-standard-amd64-generic-v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\-k3sv([^-]+)-k3s(?<build>\\d+)-?(?<revision>\\d+)?$",
-        },
-    ],
     customManagers: [
         {
             customType: "regex",
             description: "Process various dependencies in YAML files",
             fileMatch: ["\\.ya?ml$"],
             matchStrings: [
-                // Inline
-                '\\S+: "?(?<currentValue>[^"\\s]+)"? # ?renovate: depName=(?<depName>\\S+)( datasource=(?<datasource>\\S+))?( versioning=(?<versioning>\\S+))?( extractVersion=(?<extractVersion>\\S+))?',
-                // Newline
-                '(?m:^[ \\t]*?# ?renovate: depName=(?<depName>\\S+)( datasource=(?<datasource>\\S+))?( versioning=(?<versioning>\\S+))?( extractVersion=(?<extractVersion>\\S+))?\\n[ \\t ]*?\\S+: "?(?<currentValue>[^" ]+?)"?$)',
-            ],
-            datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-            versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
-            extractVersionTemplate: "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}",
+                'depName=(?<depName>\\S+) datasource=(?<datasource>\\S+)\\n(?<currentValue>\\S+)$',
+            ]
         },
     ],
 }
